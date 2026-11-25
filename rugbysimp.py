@@ -46,3 +46,15 @@ table = pd.read_sql_query(
     "SELECT name, age, caps, position, country FROM player_details ORDER BY name", conn
 )
 st.dataframe(table, hide_index=True)
+
+
+# ---------- Part 3: Chart of average age per country ----------
+st.header("Average age per country")
+
+# GROUP BY puts the players into one group per country, AVG works out each group's average
+chart_data = pd.read_sql_query(
+    "SELECT country, ROUND(AVG(age), 1) AS average_age FROM player_details GROUP BY country",
+    conn,
+)
+st.bar_chart(chart_data, x="country", y="average_age")
+
